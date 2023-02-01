@@ -7,6 +7,7 @@ from absl import app
 from absl import flags
 
 import sys
+
 sys.path.append("../../")
 import os
 
@@ -21,12 +22,12 @@ from reco_utils.dataset.sequential_reviews import data_preprocessing
 from reco_utils.recommender.deeprec.models.sequential.sli_rec import SLI_RECModel
 from reco_utils.recommender.deeprec.models.sequential.clsr import CLSRModel
 from reco_utils.recommender.deeprec.models.sequential.asvd import A2SVDModel
-from reco_utils.recommender.deeprec.models.sequential.caser import CaserModel
-from reco_utils.recommender.deeprec.models.sequential.gru4rec import GRU4RecModel
-from reco_utils.recommender.deeprec.models.sequential.din import DINModel
-from reco_utils.recommender.deeprec.models.sequential.dien import DIENModel
-from reco_utils.recommender.deeprec.models.sequential.ncf import NCFModel
-from reco_utils.recommender.deeprec.models.sequential.lgn import LGNModel
+# from reco_utils.recommender.deeprec.models.sequential.caser import CaserModel
+# from reco_utils.recommender.deeprec.models.sequential.gru4rec import GRU4RecModel
+# from reco_utils.recommender.deeprec.models.sequential.din import DINModel
+# from reco_utils.recommender.deeprec.models.sequential.dien import DIENModel
+# from reco_utils.recommender.deeprec.models.sequential.ncf import NCFModel
+# from reco_utils.recommender.deeprec.models.sequential.lgn import LGNModel
 
 from reco_utils.recommender.deeprec.io.sequential_iterator import (
     SequentialIterator,
@@ -158,158 +159,158 @@ def get_model(flags_obj, model_path, summary_path, user_vocab, item_vocab, cate_
         model = CLSRModel(hparams, input_creator, seed=RANDOM_SEED)
 
     # GRU4REC
-    elif flags_obj.model == 'GRU4REC':
-        yaml_file = '../../reco_utils/recommender/deeprec/config/gru4rec.yaml'
-        hparams = prepare_hparams(yaml_file,
-                                  embed_l2=flags_obj.embed_l2,
-                                  layer_l2=flags_obj.layer_l2,
-                                  learning_rate=flags_obj.learning_rate,
-                                  epochs=EPOCHS,
-                                  EARLY_STOP=flags_obj.early_stop,
-                                  batch_size=BATCH_SIZE,
-                                  show_step=flags_obj.show_step,
-                                  MODEL_DIR=model_path,
-                                  SUMMARIES_DIR=summary_path,
-                                  user_vocab=user_vocab,
-                                  item_vocab=item_vocab,
-                                  cate_vocab=cate_vocab,
-                                  need_sample=True,
-                                  train_num_ngs=train_num_ngs,
-                                  # provides the number of negative instances for each positive instance for loss computation.
-                                  max_seq_length=max_seq_length,
-                                  hidden_size=40,
-                                  pairwise_metrics=pairwise_metrics,
-                                  weighted_metrics=weighted_metrics,
-                                  )
-        model = GRU4RecModel(hparams, input_creator, seed=RANDOM_SEED)
+    # elif flags_obj.model == 'GRU4REC':
+    #     yaml_file = '../../reco_utils/recommender/deeprec/config/gru4rec.yaml'
+    #     hparams = prepare_hparams(yaml_file,
+    #                               embed_l2=flags_obj.embed_l2,
+    #                               layer_l2=flags_obj.layer_l2,
+    #                               learning_rate=flags_obj.learning_rate,
+    #                               epochs=EPOCHS,
+    #                               EARLY_STOP=flags_obj.early_stop,
+    #                               batch_size=BATCH_SIZE,
+    #                               show_step=flags_obj.show_step,
+    #                               MODEL_DIR=model_path,
+    #                               SUMMARIES_DIR=summary_path,
+    #                               user_vocab=user_vocab,
+    #                               item_vocab=item_vocab,
+    #                               cate_vocab=cate_vocab,
+    #                               need_sample=True,
+    #                               train_num_ngs=train_num_ngs,
+    #                               # provides the number of negative instances for each positive instance for loss computation.
+    #                               max_seq_length=max_seq_length,
+    #                               hidden_size=40,
+    #                               pairwise_metrics=pairwise_metrics,
+    #                               weighted_metrics=weighted_metrics,
+    #                               )
+    #     model = GRU4RecModel(hparams, input_creator, seed=RANDOM_SEED)
 
     # DIN
-    elif flags_obj.model == 'DIN':
-        yaml_file = '../../reco_utils/recommender/deeprec/config/din.yaml'
-        hparams = prepare_hparams(yaml_file,
-                                  embed_l2=flags_obj.embed_l2,
-                                  layer_l2=flags_obj.layer_l2,
-                                  learning_rate=flags_obj.learning_rate,
-                                  epochs=EPOCHS,
-                                  EARLY_STOP=flags_obj.early_stop,
-                                  batch_size=BATCH_SIZE,
-                                  show_step=flags_obj.show_step,
-                                  MODEL_DIR=model_path,
-                                  SUMMARIES_DIR=summary_path,
-                                  user_vocab=user_vocab,
-                                  item_vocab=item_vocab,
-                                  cate_vocab=cate_vocab,
-                                  need_sample=True,
-                                  train_num_ngs=train_num_ngs,
-                                  # provides the number of negative instances for each positive instance for loss computation.
-                                  max_seq_length=max_seq_length, hidden_size=40,
-                                  pairwise_metrics=pairwise_metrics,
-                                  weighted_metrics=weighted_metrics,
-                                  )
-        model = DINModel(hparams, input_creator, seed=RANDOM_SEED)
+    # elif flags_obj.model == 'DIN':
+    #     yaml_file = '../../reco_utils/recommender/deeprec/config/din.yaml'
+    #     hparams = prepare_hparams(yaml_file,
+    #                               embed_l2=flags_obj.embed_l2,
+    #                               layer_l2=flags_obj.layer_l2,
+    #                               learning_rate=flags_obj.learning_rate,
+    #                               epochs=EPOCHS,
+    #                               EARLY_STOP=flags_obj.early_stop,
+    #                               batch_size=BATCH_SIZE,
+    #                               show_step=flags_obj.show_step,
+    #                               MODEL_DIR=model_path,
+    #                               SUMMARIES_DIR=summary_path,
+    #                               user_vocab=user_vocab,
+    #                               item_vocab=item_vocab,
+    #                               cate_vocab=cate_vocab,
+    #                               need_sample=True,
+    #                               train_num_ngs=train_num_ngs,
+    #                               # provides the number of negative instances for each positive instance for loss computation.
+    #                               max_seq_length=max_seq_length, hidden_size=40,
+    #                               pairwise_metrics=pairwise_metrics,
+    #                               weighted_metrics=weighted_metrics,
+    #                               )
+    #     model = DINModel(hparams, input_creator, seed=RANDOM_SEED)
 
     # DIEN
-    elif flags_obj.model == 'DIEN':
-        yaml_file = '../../reco_utils/recommender/deeprec/config/dien.yaml'
-        hparams = prepare_hparams(yaml_file,
-                                  embed_l2=flags_obj.embed_l2,
-                                  layer_l2=flags_obj.layer_l2,
-                                  learning_rate=flags_obj.learning_rate,
-                                  epochs=EPOCHS,
-                                  EARLY_STOP=flags_obj.early_stop,
-                                  batch_size=BATCH_SIZE,
-                                  show_step=flags_obj.show_step,
-                                  MODEL_DIR=model_path,
-                                  SUMMARIES_DIR=summary_path,
-                                  user_vocab=user_vocab,
-                                  item_vocab=item_vocab,
-                                  cate_vocab=cate_vocab,
-                                  need_sample=True,
-                                  train_num_ngs=train_num_ngs,
-                                  # provides the number of negative instances for each positive instance for loss computation.
-                                  hidden_size=40,
-                                  max_seq_length=max_seq_length,
-                                  pairwise_metrics=pairwise_metrics,
-                                  weighted_metrics=weighted_metrics,
-                                  )
-        model = DIENModel(hparams, input_creator, seed=RANDOM_SEED)
-
-    # Caser
-    elif flags_obj.model == 'CASER':
-        yaml_file = '../../reco_utils/recommender/deeprec/config/caser.yaml'
-        hparams = prepare_hparams(yaml_file,
-                                  embed_l2=flags_obj.embed_l2,
-                                  layer_l2=flags_obj.layer_l2,
-                                  learning_rate=flags_obj.learning_rate,
-                                  epochs=EPOCHS,
-                                  EARLY_STOP=flags_obj.early_stop,
-                                  batch_size=BATCH_SIZE,
-                                  show_step=flags_obj.show_step,
-                                  MODEL_DIR=model_path,
-                                  SUMMARIES_DIR=summary_path,
-                                  user_vocab=user_vocab,
-                                  item_vocab=item_vocab,
-                                  cate_vocab=cate_vocab,
-                                  need_sample=True,
-                                  train_num_ngs=train_num_ngs,
-                                  # provides the number of negative instances for each positive instance for loss computation.
-                                  T=1, n_v=128, n_h=128, L=3,
-                                  min_seq_length=5,
-                                  max_seq_length=max_seq_length,
-                                  pairwise_metrics=pairwise_metrics,
-                                  weighted_metrics=weighted_metrics,
-                                  )
-        model = CaserModel(hparams, input_creator)
-
-    # NCF
-    elif flags_obj.model == 'NCF':
-        yaml_file = '../../reco_utils/recommender/deeprec/config/ncf.yaml'
-        hparams = prepare_hparams(yaml_file,
-                                  embed_l2=flags_obj.embed_l2,
-                                  layer_l2=flags_obj.layer_l2,
-                                  learning_rate=flags_obj.learning_rate,
-                                  epochs=EPOCHS,
-                                  EARLY_STOP=flags_obj.early_stop,
-                                  batch_size=BATCH_SIZE,
-                                  show_step=flags_obj.show_step,
-                                  MODEL_DIR=model_path,
-                                  SUMMARIES_DIR=summary_path,
-                                  user_vocab=user_vocab,
-                                  item_vocab=item_vocab,
-                                  cate_vocab=cate_vocab,
-                                  need_sample=True,
-                                  train_num_ngs=train_num_ngs,
-                                  # provides the number of negative instances for each positive instance for loss computation.
-                                  max_seq_length=max_seq_length, hidden_size=40,
-                                  pairwise_metrics=pairwise_metrics,
-                                  weighted_metrics=weighted_metrics,
-                                  )
-        model = NCFModel(hparams, input_creator, seed=RANDOM_SEED)
-
-    # LGN
-    elif flags_obj.model == 'LGN':
-        yaml_file = '../../reco_utils/recommender/deeprec/config/lgn.yaml'
-        hparams = prepare_hparams(yaml_file,
-                                  embed_l2=flags_obj.embed_l2,
-                                  layer_l2=flags_obj.layer_l2,
-                                  learning_rate=flags_obj.learning_rate,
-                                  epochs=EPOCHS,
-                                  EARLY_STOP=flags_obj.early_stop,
-                                  batch_size=BATCH_SIZE,
-                                  show_step=flags_obj.show_step,
-                                  MODEL_DIR=model_path,
-                                  SUMMARIES_DIR=summary_path,
-                                  user_vocab=user_vocab,
-                                  item_vocab=item_vocab,
-                                  cate_vocab=cate_vocab,
-                                  need_sample=True,
-                                  train_num_ngs=train_num_ngs,
-                                  # provides the number of negative instances for each positive instance for loss computation.
-                                  max_seq_length=max_seq_length, hidden_size=40,
-                                  pairwise_metrics=pairwise_metrics,
-                                  weighted_metrics=weighted_metrics,
-                                  )
-        model = LGNModel(hparams, input_creator, seed=RANDOM_SEED)
+    # elif flags_obj.model == 'DIEN':
+    #     yaml_file = '../../reco_utils/recommender/deeprec/config/dien.yaml'
+    #     hparams = prepare_hparams(yaml_file,
+    #                               embed_l2=flags_obj.embed_l2,
+    #                               layer_l2=flags_obj.layer_l2,
+    #                               learning_rate=flags_obj.learning_rate,
+    #                               epochs=EPOCHS,
+    #                               EARLY_STOP=flags_obj.early_stop,
+    #                               batch_size=BATCH_SIZE,
+    #                               show_step=flags_obj.show_step,
+    #                               MODEL_DIR=model_path,
+    #                               SUMMARIES_DIR=summary_path,
+    #                               user_vocab=user_vocab,
+    #                               item_vocab=item_vocab,
+    #                               cate_vocab=cate_vocab,
+    #                               need_sample=True,
+    #                               train_num_ngs=train_num_ngs,
+    #                               # provides the number of negative instances for each positive instance for loss computation.
+    #                               hidden_size=40,
+    #                               max_seq_length=max_seq_length,
+    #                               pairwise_metrics=pairwise_metrics,
+    #                               weighted_metrics=weighted_metrics,
+    #                               )
+    #     model = DIENModel(hparams, input_creator, seed=RANDOM_SEED)
+    #
+    # # Caser
+    # elif flags_obj.model == 'CASER':
+    #     yaml_file = '../../reco_utils/recommender/deeprec/config/caser.yaml'
+    #     hparams = prepare_hparams(yaml_file,
+    #                               embed_l2=flags_obj.embed_l2,
+    #                               layer_l2=flags_obj.layer_l2,
+    #                               learning_rate=flags_obj.learning_rate,
+    #                               epochs=EPOCHS,
+    #                               EARLY_STOP=flags_obj.early_stop,
+    #                               batch_size=BATCH_SIZE,
+    #                               show_step=flags_obj.show_step,
+    #                               MODEL_DIR=model_path,
+    #                               SUMMARIES_DIR=summary_path,
+    #                               user_vocab=user_vocab,
+    #                               item_vocab=item_vocab,
+    #                               cate_vocab=cate_vocab,
+    #                               need_sample=True,
+    #                               train_num_ngs=train_num_ngs,
+    #                               # provides the number of negative instances for each positive instance for loss computation.
+    #                               T=1, n_v=128, n_h=128, L=3,
+    #                               min_seq_length=5,
+    #                               max_seq_length=max_seq_length,
+    #                               pairwise_metrics=pairwise_metrics,
+    #                               weighted_metrics=weighted_metrics,
+    #                               )
+    #     model = CaserModel(hparams, input_creator)
+    #
+    # # NCF
+    # elif flags_obj.model == 'NCF':
+    #     yaml_file = '../../reco_utils/recommender/deeprec/config/ncf.yaml'
+    #     hparams = prepare_hparams(yaml_file,
+    #                               embed_l2=flags_obj.embed_l2,
+    #                               layer_l2=flags_obj.layer_l2,
+    #                               learning_rate=flags_obj.learning_rate,
+    #                               epochs=EPOCHS,
+    #                               EARLY_STOP=flags_obj.early_stop,
+    #                               batch_size=BATCH_SIZE,
+    #                               show_step=flags_obj.show_step,
+    #                               MODEL_DIR=model_path,
+    #                               SUMMARIES_DIR=summary_path,
+    #                               user_vocab=user_vocab,
+    #                               item_vocab=item_vocab,
+    #                               cate_vocab=cate_vocab,
+    #                               need_sample=True,
+    #                               train_num_ngs=train_num_ngs,
+    #                               # provides the number of negative instances for each positive instance for loss computation.
+    #                               max_seq_length=max_seq_length, hidden_size=40,
+    #                               pairwise_metrics=pairwise_metrics,
+    #                               weighted_metrics=weighted_metrics,
+    #                               )
+    #     model = NCFModel(hparams, input_creator, seed=RANDOM_SEED)
+    #
+    # # LGN
+    # elif flags_obj.model == 'LGN':
+    #     yaml_file = '../../reco_utils/recommender/deeprec/config/lgn.yaml'
+    #     hparams = prepare_hparams(yaml_file,
+    #                               embed_l2=flags_obj.embed_l2,
+    #                               layer_l2=flags_obj.layer_l2,
+    #                               learning_rate=flags_obj.learning_rate,
+    #                               epochs=EPOCHS,
+    #                               EARLY_STOP=flags_obj.early_stop,
+    #                               batch_size=BATCH_SIZE,
+    #                               show_step=flags_obj.show_step,
+    #                               MODEL_DIR=model_path,
+    #                               SUMMARIES_DIR=summary_path,
+    #                               user_vocab=user_vocab,
+    #                               item_vocab=item_vocab,
+    #                               cate_vocab=cate_vocab,
+    #                               need_sample=True,
+    #                               train_num_ngs=train_num_ngs,
+    #                               # provides the number of negative instances for each positive instance for loss computation.
+    #                               max_seq_length=max_seq_length, hidden_size=40,
+    #                               pairwise_metrics=pairwise_metrics,
+    #                               weighted_metrics=weighted_metrics,
+    #                               )
+    #     model = LGNModel(hparams, input_creator, seed=RANDOM_SEED)
 
     return model
 
@@ -321,8 +322,9 @@ def main(argv):
     print("Tensorflow version: {}".format(tf.__version__))
 
     print('start experiment')
-    exit()
+
     data_path = os.path.join(flags_obj.data_path, flags_obj.dataset)
+    data_path = "D:\work\My_model_dataset\\taobao\\taobao"
     if flags_obj.dataset == 'taobao':
         reviews_name = 'UserBehavior.csv'
         meta_name = ''
