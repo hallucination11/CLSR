@@ -9,19 +9,20 @@ from absl import flags
 import sys
 
 sys.path.append("../../")
+sys.path.append("../CLSR")
 import os
 
 import tensorflow as tf
 import time
 
-from reco_utils.common.constants import SEED
+# from reco_utils.common.constants import SEED
 from reco_utils.recommender.deeprec.deeprec_utils import (
     prepare_hparams
 )
 from reco_utils.dataset.sequential_reviews import data_preprocessing
 from reco_utils.recommender.deeprec.models.sequential.sli_rec import SLI_RECModel
 from reco_utils.recommender.deeprec.models.sequential.clsr import CLSRModel
-from reco_utils.recommender.deeprec.models.sequential.asvd import A2SVDModel
+# from reco_utils.recommender.deeprec.models.sequential.asvd import A2SVDModel
 # from reco_utils.recommender.deeprec.models.sequential.caser import CaserModel
 # from reco_utils.recommender.deeprec.models.sequential.gru4rec import GRU4RecModel
 # from reco_utils.recommender.deeprec.models.sequential.din import DINModel
