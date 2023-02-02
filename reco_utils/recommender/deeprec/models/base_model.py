@@ -51,6 +51,7 @@ class BaseModel:
 
             self.initializer = self._get_initializer()
 
+            # 在sequential_base_model中重写
             self.logit = self._build_graph()
             self.pred = self._get_pred(self.logit, self.hparams.method)
 

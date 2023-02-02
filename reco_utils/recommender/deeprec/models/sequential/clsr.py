@@ -5,7 +5,7 @@ import tensorflow as tf
 from reco_utils.recommender.deeprec.models.sequential.sequential_base_model import (
     SequentialBaseModel,
 )
-# from tensorflow.nn import dynamic_rnn
+from tensorflow.nn import dynamic_rnn
 from reco_utils.recommender.deeprec.models.sequential.rnn_cell_implement import (
     Time4LSTMCell,
 )
@@ -141,7 +141,7 @@ class CLSRModel(SequentialBaseModel):
             obj:the output of clsr section.
         """
         hparams = self.hparams
-        with tf.compat.v1.variable_scope("clsr"):
+        with tf.variable_scope("clsr"):
             hist_input = tf.concat(
                 [self.item_history_embedding, self.cate_history_embedding], 2
             )
@@ -149,17 +149,17 @@ class CLSRModel(SequentialBaseModel):
             self.real_mask = tf.cast(self.mask, tf.float32)
             self.sequence_length = tf.reduce_sum(self.mask, 1)
 
-            with tf.compat.v1.variable_scope("long_term"):
+            with tf.variable_scope("long_term"):
                 att_outputs_long = self._attention_fcn(self.user_long_embedding, hist_input)
                 self.att_fea_long = tf.reduce_sum(att_outputs_long, 1)
                 tf.summary.histogram("att_fea_long", self.att_fea_long)
 
                 self.hist_mean = tf.reduce_sum(hist_input*tf.expand_dims(self.real_mask, -1), 1)/tf.reduce_sum(self.real_mask, 1, keepdims=True)
 
-            with tf.compat.v1.variable_scope("short_term"):
+            with tf.variable_scope("short_term"):
                 if hparams.interest_evolve:
-                    _, short_term_intention = tf.compat.v1.nn.dynamic_rnn(
-                        tf.compat.v1.nn.rnn_cell.GRUCell(hparams.user_embedding_dim),
+                    _, short_term_intention = dynamic_rnn(
+                        tf.nn.rnn_cell.GRUCell(hparams.user_embedding_dim),
                         inputs=hist_input,
                         sequence_length=self.sequence_length,
                         initial_state=self.user_short_embedding,
@@ -191,7 +191,7 @@ class CLSRModel(SequentialBaseModel):
                         ],
                         -1,
                     )
-                    rnn_outputs, _ = tf.compat.v1.nn.dynamic_rnn(
+                    rnn_outputs, _ = tf.nn.dynamic_rnn(
                         Time4LSTMCell(hparams.hidden_size),
                         inputs=item_history_embedding_new,
                         sequence_length=self.sequence_length,
@@ -199,16 +199,16 @@ class CLSRModel(SequentialBaseModel):
                         scope="time4lstm",
                     )
                 elif hparams.sequential_model == 'gru':
-                    rnn_outputs, _ = tf.compat.v1.nn.dynamic_rnn(
-                        tf.compat.v1.nn.rnn_cell.GRUCell(hparams.hidden_size),
+                    rnn_outputs, _ = tf.nn.dynamic_rnn(
+                        tf.nn.rnn_cell.GRUCell(hparams.hidden_size),
                         inputs=hist_input,
                         sequence_length=self.sequence_length,
                         dtype=tf.float32,
                         scope="simple_gru",
                     )
                 elif hparams.sequential_model == 'lstm':
-                    rnn_outputs, _ = tf.compat.v1.nn.dynamic_rnn(
-                        tf.compat.v1.nn.rnn_cell.LSTMCell(hparams.hidden_size),
+                    rnn_outputs, _ = tf.nn.dynamic_rnn(
+                        tf.nn.rnn_cell.LSTMCell(hparams.hidden_size),
                         inputs=hist_input,
                         sequence_length=self.sequence_length,
                         dtype=tf.float32,
@@ -226,9 +226,9 @@ class CLSRModel(SequentialBaseModel):
 
                 if not hparams.manual_alpha:
                     if hparams.predict_long_short:
-                        with tf.compat.v1.variable_scope("causal2"):
+                        with tf.variable_scope("causal2"):
                             _, final_state = dynamic_rnn(
-                                tf.compat.v1.nn.rnn_cell.GRUCell(hparams.hidden_size),
+                                tf.nn.rnn_cell.GRUCell(hparams.hidden_size),
                                 inputs=hist_input,
                                 sequence_length=self.sequence_length,
                                 dtype=tf.float32,

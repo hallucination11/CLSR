@@ -47,6 +47,7 @@ def data_preprocessing(
     """
     if dataset == 'taobao':
         reviews_output, meta_output = taobao_main(reviews_file)
+        exit()
     elif dataset == 'kuaishou':
         reviews_output, meta_output = kuaishou_main(reviews_file)
 
@@ -951,6 +952,7 @@ def downsample(record, col, frac):
 
 def taobao_main(reviews_file):
     reviews = pd.read_csv(reviews_file, header=None, names=['uid', 'iid', 'category', 'behavior', 'ts'])
+    # 选曝光的样本
     reviews = reviews[reviews['behavior'] == 'pv']
     reviews = reviews.drop_duplicates(subset=['uid', 'iid'])
     reviews = filter_items_with_multiple_cids(reviews)

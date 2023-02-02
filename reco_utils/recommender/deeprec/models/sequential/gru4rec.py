@@ -5,8 +5,9 @@ import tensorflow as tf
 from reco_utils.recommender.deeprec.models.sequential.sequential_base_model import (
     SequentialBaseModel,
 )
-from tensorflow.contrib.rnn import GRUCell, LSTMCell
-from tensorflow.nn import dynamic_rnn
+# from tensorflow.python.keras.rnn import GRUCell, LSTMCell
+# from tensorflow.nn import dynamic_rnn
+from tensorflow.keras.layers import *
 
 __all__ = ["GRU4RecModel"]
 
@@ -43,7 +44,7 @@ class GRU4RecModel(SequentialBaseModel):
             self.history_embedding = tf.concat(
                 [self.item_history_embedding, self.cate_history_embedding], 2
             )
-            rnn_outputs, final_state = dynamic_rnn(
+            rnn_outputs, final_state = tf.compat.v1.nn.dynamic_rnn(
                 LSTMCell(self.hidden_size),
                 inputs=self.history_embedding,
                 sequence_length=self.sequence_length,
@@ -65,7 +66,7 @@ class GRU4RecModel(SequentialBaseModel):
             self.history_embedding = tf.concat(
                 [self.item_history_embedding, self.cate_history_embedding], 2
             )
-            rnn_outputs, final_state = dynamic_rnn(
+            rnn_outputs, final_state = tf.compat.v1.nn.dynamic_rnn(
                 GRUCell(self.hidden_size),
                 inputs=self.history_embedding,
                 sequence_length=self.sequence_length,
