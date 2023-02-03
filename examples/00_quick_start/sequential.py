@@ -123,7 +123,7 @@ def get_model(flags_obj, model_path, summary_path, user_vocab, item_vocab, cate_
         model = SLI_RECModel(hparams, input_creator, seed=RANDOM_SEED)
 
     elif flags_obj.model == 'CLSR':
-        yaml_file = '../../reco_utils/recommender/deeprec/config/clsr.yaml'
+        yaml_file = 'D:/work/My_model/CLSR/reco_utils/recommender/deeprec/config/clsr.yaml'
         hparams = prepare_hparams(yaml_file,
                                   embed_l2=flags_obj.embed_l2,
                                   layer_l2=flags_obj.layer_l2,
@@ -373,7 +373,9 @@ def main(argv):
     eval_metric = 'wauc'
 
     start_time = time.time()
+    print("++++++++++++++++++++++++ start training ++++++++++++++++++++++")
     model = model.fit(train_file, valid_file, valid_num_ngs=valid_num_ngs, eval_metric=eval_metric)
+    exit()
     # valid_num_ngs is the number of negative lines after each positive line in your valid_file 
     # we will evaluate the performance of model on valid_file every epoch
     end_time = time.time()

@@ -17,7 +17,6 @@ __all__ = ["SequentialBaseModel"]
 
 class SequentialBaseModel(BaseModel):
     def __init__(self, hparams, iterator_creator, graph=None, seed=None):
-        print('a')
         """Initializing the model. Create common logics which are needed by all sequential models, such as loss function, 
         parameter set.
 
@@ -61,14 +60,13 @@ class SequentialBaseModel(BaseModel):
         """
         hparams = self.hparams
         self.keep_prob_train = 1 - np.array(hparams.dropout)
-        print(self.keep_prob_train)
-        exit()
         self.keep_prob_test = np.ones_like(hparams.dropout)
 
         self.embedding_keep_prob_train = 1.0 - hparams.embedding_dropout
         self.embedding_keep_prob_test = 1.0
 
         with tf.variable_scope("sequential") as self.sequential_scope:
+            # 先执行子类中的函数，再执行父类中的
             self._build_embedding()
             self._lookup_from_embedding()
             model_output = self._build_seq_graph()

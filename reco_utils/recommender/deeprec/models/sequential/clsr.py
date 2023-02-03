@@ -426,6 +426,8 @@ class CLSRModel(SequentialBaseModel):
         epoch_discrepancy_loss = 0
         for batch_data_input in file_iterator:
             if batch_data_input:
+                print(batch_data_input)
+                exit()
                 step_result = self.train(train_sess, batch_data_input)
                 (_, _, step_loss, step_data_loss, step_regular_loss, step_contrastive_loss, step_discrepancy_loss, summary) = step_result
                 if self.hparams.write_tfevents and self.hparams.SUMMARIES_DIR:
