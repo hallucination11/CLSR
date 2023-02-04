@@ -38,6 +38,7 @@ class SequentialIterator(BaseIterator):
         )
 
         self.max_seq_length = hparams.max_seq_length
+        # 原来是500，现改成5
         self.batch_size = hparams.batch_size
         self.iter_data = dict()
 
@@ -216,7 +217,6 @@ class SequentialIterator(BaseIterator):
         time_to_now_list = []
 
         cnt = 0
-
         if infile not in self.iter_data:
             lines = self.parse_file(infile)
             self.iter_data[infile] = lines

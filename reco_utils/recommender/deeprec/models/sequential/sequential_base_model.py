@@ -90,6 +90,7 @@ class SequentialBaseModel(BaseModel):
         epoch_loss: total loss of the single epoch.
 
         """
+        print("sequence_base_model ++++++")
         step = 0
         epoch_loss = 0
         for batch_data_input in file_iterator:
@@ -126,6 +127,7 @@ class SequentialBaseModel(BaseModel):
         """
 
         # check bad input.
+        print("fit++++++++")
         if not self.need_sample and self.train_num_ngs < 1:
             raise ValueError(
                 "Please specify a positive integer of negative numbers for training without sampling needed."
